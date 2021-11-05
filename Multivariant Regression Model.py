@@ -21,6 +21,7 @@ toc_db = pd.read_csv('Multivariant_Regression_TOC.csv')
 # Pull out the dependent variables from the "Redox and Production Proxies" to use in model (i.e. 'Mo','U','Ni','Cu','Cr','Zn','Pb','Th','V','Ba','S','Fe')
 # Remove elements that are not present in dataset (i.e. if sum of element equals zero)
 x = pd.DataFrame(toc_db[['Mo','U','Ni','Cu','Cr','Zn','Pb','Th','V','Ba','S','Fe']])
+##x_name_df = pd.DataFrame(x.columns).T
 
 # Pull out the independent variable "TOC"
 y = pd.DataFrame(toc_db[['TOC']])
@@ -46,13 +47,17 @@ score = r2_score(y_test,y_predict)
 
 # Finding Coefficient & Y-Intercept of LR Model
 coef = model.coef_
+coef_df = pd.DataFrame(coef)
+##coef_df = coef_df.assign(column_name = x_name_df)
 intercept = model.intercept_
+intercept_df = pd.DataFrame(intercept)
 
 # Merging coef and intercept for export
-C_I = np.concatenate([coef,intercept], axis=None)
+C_I = np.concatenate([coef_df,intercept_df], axis=None)
 
 # Write Coefficients & Y-intercept to Excel
-df = pd.DataFrame(C_I).T
+df = pd.DataFrame(C_I,).T
+##df2 = df.assign(column_name = x_name_df)
 df.to_excel(excel_writer = "TOC_Coefficient.xlsx", index=False)
 
 # Scatter Plot of Prediction vs TOC
