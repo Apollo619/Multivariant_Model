@@ -1,2 +1,3 @@
 # Multivariant_Model
-Using scikit learn linear regression to perform multivariant regression model
+
+Apply scikit learn linear regression on **X-Ray Fluorescence Data** to perform multivariant regression model
